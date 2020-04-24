@@ -38,7 +38,7 @@ for i in range(epochs):
         print("Epoch: "+ str(i))
     s = env.reset()
     rAll = 0
-    destination = False
+    isDestination = False
     curIter = 0;
     for curIter in range(100):
         a,allQ = sess.run([predict,Qout],feed_dict = {inputState : np.identity(16)[s:s+1]})
@@ -54,7 +54,7 @@ for i in range(epochs):
         _,W1 = sess.run([update,W],feed_dict = {inputState: np.identity(16)[s:s+1], nextQ: targetQ, learning_rate: init_learn_rate/(alpha*i + 1)})
         rAll += reward
         s = s_next
-        if destination == True:
+        if isDestination == True:
             e = 1/((i/50)+10)
             break
     jList.append(curIter)
@@ -62,12 +62,12 @@ for i in range(epochs):
     
     
 
-print("Percent of succesful episodes: " + str(sum(rList)/num_episodes) + "%")
+print("Percent of succesful episodes: " + str(sum(rList)/epochs) + "%")
 
 pl1 = plt.subplot(1,2,1)
 pl2 = plt.subplot(1,2,2)
             
 pl1.plot(rList)
-plt2.plot(jList)
+pl2.plot(jList)
 
 plt.show()
