@@ -11,7 +11,7 @@ learning_rate = tf.placeholder(tf.float16, shape=[])
 
 inputState = tf.placeholder(dtype =tf.float16, shape = [1,16])
 W = tf.Variable(tf.random.uniform([16,4], minval = 0, maxval = 0.2, dtype=tf.float16))
-b = tf.Variable(tf.random.uniform([1,4], minval = -0.1, maxval = 0.1, dtype=tf.float16))
+b = tf.Variable(tf.random.uniform([1,4], minval = 0., maxval = 0.05, dtype=tf.float16))
 
 Qout = tf.add(tf.matmul(inputState,W),b)
 predict = tf.argmax(Qout,1)
@@ -55,7 +55,7 @@ for i in range(epochs):
         rAll += reward
         s = s_next
         if isDestination == True:
-            e = 1/((i/50)+10)
+            e = 1/((i/10)+10)
             break
     jList.append(curIter)
     rList.append(rAll)
